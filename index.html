@@ -39,14 +39,26 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 </style></head>
 <body><div class="wrap">
 <header>
-<p class="kicker">Williams Cancer Institute · Admissions CRM</p>
-<h1>We are going to try Odoo first</h1>
-<p class="sub">What Admissions gets over the current ERP, how it connects to CloudTalk, the ERP, email and the clinical systems, the workflows we will build for each stage of the patient journey, and what we need from WCI to run it.</p>
+<p class="kicker">Williams Cancer Institute · Admissions</p>
+<h1>Admissions CRM: decision, design and rollout</h1>
+<p class="sub">The platform we recommend and why, what Admissions gains over the current ERP, how it connects to CloudTalk, the ERP, email and the clinical systems, the workflows for each stage of the patient journey, how call analysis and AI coaching fit in, and what we need from WCI to run it.</p>
 <p class="meta">Prepared by Winn Solutions for Peter · September 9, 2026 · Confidential, for WCI internal use · Every screen in this document runs on invented test data; no patient information was used.</p>
 </header>
 
-<h2>The decision in one paragraph</h2>
-<div class="card ok"><p><strong>We are starting with Odoo Community, self-hosted in a WCI-owned AWS account.</strong> It is open source with no licence cost, it met every requirement without a paid tier, an unresolved vendor agreement or a switch that cannot be undone, CloudTalk connects to it with CloudTalk's own module, and it already runs the admissions pipeline in a working prototype. Patient data never sits with a CRM vendor: it stays in WCI's account under the AWS Business Associate Agreement.</p></div>
+<h2>Recommendation</h2>
+<div class="card ok"><p><strong>Replace the admissions layer of the ERP with Odoo Community, self-hosted in a WCI-owned AWS account, starting with a parallel run alongside the ERP.</strong> The ERP stays in place for everything else until the pilot proves out.</p></div>
+
+<h2>Why Odoo</h2>
+<p>We evaluated six open-source platforms and eleven commercial CRMs that will sign a Business Associate Agreement, against the same requirements: a lawful place for patient data, the automations Admissions needs, a clean connection to CloudTalk and the ERP, an audit trail, a sensible cost for eight users, and room to add call analysis and AI coaching later. Odoo is the recommendation for six reasons.</p>
+<ol>
+<li><strong>It meets every requirement without a catch.</strong> Every commercial option we looked at fails at least one: a HIPAA switch that cannot be reversed (GoHighLevel, HubSpot), health data prohibited in the terms (Pipedrive, Copper, Nutshell), safeguards too thin for patient records (Zoho), or a price set for a hospital system (Salesforce). The other open-source options each lack something we need: a paid workflow engine, undocumented two-factor login, or paid audit logging.</li>
+<li><strong>Patient data stays in WCI's hands.</strong> No CRM vendor ever holds it. The only agreement is the AWS Business Associate Agreement, which is free and self-serve, and every safeguard (encryption, two-factor login, roles, access logging) is configured in WCI's own account.</li>
+<li><strong>The automations are built in and unlimited.</strong> Timed follow-ups, stage rules, assignment, escalations, webhooks in and out, with no per-run charges and no caps on record types. Everything in this document runs on the free edition.</li>
+<li><strong>CloudTalk connects natively.</strong> CloudTalk publishes its own Odoo module: click-to-call from the record; calls, notes, tags and recording links logged on the lead. No other self-hosted option has that.</li>
+<li><strong>It is already working.</strong> The pipeline, the Day 1 to 4 sequence, the alerts and the hand-offs run today in a prototype built on invented test data. Nothing here is a slide-deck promise.</li>
+<li><strong>It is open, so the AI layer can sit beside it.</strong> Because we control the code and the data, call transcripts, analysis and coaching prompts can be produced by a HIPAA-covered AI service in the same AWS account and written straight onto the lead. Commercial CRMs either exclude their AI from the BAA or do not say.</li>
+</ol>
+<p>Cost: no licence. AWS hosting of roughly $100 to $300 a month, about $4k to $11k over three years, against $12k to $47k for the commercial options and $101k for Salesforce.</p>
 <div class="grid">
 <div class="kv"><span class="big">$0</span><b>Licence</b>Open source. The only running cost is AWS hosting, about $100 to $300 a month.</div>
 <div class="kv"><span class="big">13</span><b>Automations already working</b>Assignment, the Day 1 to 4 sequence, alerts, hand-offs and escalations, proven end to end on test data.</div>
@@ -65,6 +77,7 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 <tr><td data-l="Today"><span class="cross">✗</span> Which sources produce patients is not reported by anyone.</td><td data-l="Odoo"><span class="tick">✓</span> Source-to-outcome report on the dashboard, using the ERP's own source labels.</td></tr>
 <tr><td data-l="Today"><span class="cross">✗</span> The intake form travels by email as a PDF.</td><td data-l="Odoo"><span class="tick">✓</span> Public form collects contact details and consent only; documents are requested from the record with a checklist and reminders.</td></tr>
 <tr><td data-l="Today"><span class="cross">✗</span> No record of who viewed or changed what.</td><td data-l="Odoo"><span class="tick">✓</span> Every create, read, change and delete on a patient record is logged.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> Call analysis, if any, happens in a vendor AI outside any agreement.</td><td data-l="Odoo"><span class="tick">✓</span> Transcripts and analysis stay in WCI's account under a BAA and land on the lead as summaries, coaching and flags.</td></tr>
 <tr><td data-l="Today"><span class="cross">✗</span> Hosted on a shared web host that disclaims HIPAA.</td><td data-l="Odoo"><span class="tick">✓</span> Runs in WCI's own AWS account under the AWS Business Associate Agreement; encrypted at rest and in transit.</td></tr>
 </tbody></table></div>
 
@@ -168,6 +181,39 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 <figure><img src="evidence/demo-supervision-board.png" alt="Supervision dashboard" loading="lazy"><figcaption>Supervision dashboard: leads by source and outcome, closing reasons, and overdue follow-ups by consultant.</figcaption></figure>
 <figure><img src="evidence/demo-kanban.png" alt="Pipeline board" loading="lazy"><figcaption>The pipeline board: one card per inquiry, the owner's initials, the next task, and a "dormant" tag placed by the 14-day rule.</figcaption></figure>
 <figure><img src="evidence/demo-automation-rules.png" alt="Automation rules" loading="lazy"><figcaption>The automation rules as configured in the prototype.</figcaption></figure>
+
+<h2>AI-ready by design: call analysis, script coaching and opportunity flags</h2>
+<div class="card blue"><p><strong>Yes, this approach is built for it, and it is the only shape that keeps call analysis compliant.</strong> Call audio is patient data. The rule we design to is simple: recordings and transcripts never leave WCI's own AWS account, the AI that reads them runs under a Business Associate Agreement, and its output lands on the lead record where a consultant or the Head of Admissions acts on it. Odoo makes that possible because we control the record and the code; a commercial CRM's built-in AI either sits outside its BAA or does not say.</p></div>
+<div class="diagram"><svg viewBox="0 0 900 250" role="img" aria-label="Call analysis pipeline">
+<defs><marker id="c" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
+<g font-size="13">
+<rect x="10" y="60" width="150" height="80" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="90" text-anchor="middle" font-weight="600">CloudTalk</text><text x="85" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">call + recording</text>
+<rect x="200" y="60" width="150" height="80" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="275" y="90" text-anchor="middle" font-weight="600">Transcribe</text><text x="275" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">in WCI's AWS, under BAA</text>
+<rect x="390" y="60" width="150" height="80" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="465" y="90" text-anchor="middle" font-weight="600">Analyze</text><text x="465" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">HIPAA-covered AI service</text>
+<rect x="580" y="60" width="150" height="80" rx="8" fill="#e9f2ee" stroke="#2c5f4a"/><text x="655" y="90" text-anchor="middle" font-weight="600">Written to the lead</text><text x="655" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">summary · next step · flags</text>
+<rect x="770" y="60" width="120" height="80" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="830" y="90" text-anchor="middle" font-weight="600">Consultant</text><text x="830" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">and the Head</text>
+<line x1="160" y1="100" x2="200" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
+<line x1="350" y1="100" x2="390" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
+<line x1="540" y1="100" x2="580" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
+<line x1="730" y1="100" x2="770" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
+<rect x="200" y="170" width="530" height="50" rx="8" fill="#faf3e2" stroke="#8a6510"/><text x="465" y="200" text-anchor="middle" font-size="12.5">Audio and transcripts stay inside this box. Only the analysis reaches the record.</text>
+</g></svg></div>
+<h3>What the AI layer will do, in the order we will build it</h3>
+<ol>
+<li><strong>Call summary and next step on every recorded call.</strong> After a call, the lead shows a short summary, the reasons raised (location, cost, insurance, timing), and a suggested next action. The consultant confirms or edits it; nothing is sent without a person.</li>
+<li><strong>Script coaching in the record.</strong> The approved admissions script lives in the CRM by stage. The analysis marks which parts of the script were covered on the call and which were missed, and surfaces the right passage for the next touch: how to present the price range, how to handle the Mexico question, what to say when insurance comes up.</li>
+<li><strong>Opportunity and risk flags.</strong> Calls where the caller showed strong intent, asked to be called back, or raised an objection the script answers well are flagged to the consultant the same day; calls that went badly are flagged to the Head for coaching. Over time this feeds the lead score already built into the pipeline.</li>
+<li><strong>Weekly findings for the Head of Admissions.</strong> Which objections are rising, which script passages correlate with progress to Potential patient, which sources bring callers who convert. Presented as proposed changes to the script and the sequence, approved by WCI, never applied automatically.</li>
+</ol>
+<h3>What it integrates with, and what has to be true first</h3>
+<ul>
+<li><strong>CloudTalk data.</strong> Recording links, call metadata and tags already flow into Odoo through CloudTalk's module. For analysis we pull the recording itself through CloudTalk's API into WCI's AWS account. That needs CloudTalk's Business Associate Agreement to cover recordings and API access, which is the first item in "What we need from WCI".</li>
+<li><strong>CloudTalk's own AI Analytics.</strong> It sends audio and transcripts to third-party AI providers that are not covered by a BAA. We recommend using CloudTalk for capture only and doing transcription and analysis inside WCI's account. If CloudTalk's BAA covers its AI Analytics, that changes and we can use its transcripts directly.</li>
+<li><strong>The AI service.</strong> A HIPAA-covered model service in WCI's name (AWS Bedrock or Anthropic Enterprise both sign BAAs), so the model never sees patient data outside the agreement.</li>
+<li><strong>Call recording notice.</strong> A consistent recording announcement on every line, and consent recorded on the lead, before analysis starts.</li>
+<li><strong>The ERP's history.</strong> Past call notes and outcomes come across through the ERP's API, so the analysis can learn from what worked before.</li>
+</ul>
+<p>Sequencing: the CRM and CloudTalk connection first (weeks 1 to 4), transcription and call summaries once the CloudTalk agreement is in hand, script coaching and the weekly findings after that. Each step is useful on its own.</p>
 
 <h2>What else we looked at</h2>
 <p>We compared Odoo against the open-source alternatives (EspoCRM, Frappe CRM, Twenty, SuiteCRM, Medplum) and the commercial CRMs that will sign a Business Associate Agreement (GoHighLevel, HubSpot Enterprise, Zoho, Salesforce Health Cloud, monday, LeadSquared and others).</p>
