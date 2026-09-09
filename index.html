@@ -36,6 +36,27 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 .stage .row b{display:block;font:600 10.5px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
 @media (max-width:640px){.stage .row{grid-template-columns:1fr}td::before{content:attr(data-l);display:block;font:600 10px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}}
 .tick{color:var(--ok);font-weight:700}.cross{color:var(--accent);font-weight:700}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px 30px;margin:0 0 14px}
+.flow .step{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font:14px/1.45 ui-sans-serif,system-ui,sans-serif;position:relative;min-width:0}
+.flow .step b{display:block;font-size:14.5px;margin-bottom:4px}
+.flow .step small{display:block;color:var(--ink-2);font-size:12.5px}
+.flow .step.ok{background:var(--ok-soft);border-color:var(--ok)} .flow .step.warn{background:var(--warn-soft);border-color:var(--warn)} .flow .step.blue{background:var(--blue-soft);border-color:var(--blue)}
+.flow .step:not(:last-child)::after{content:"→";position:absolute;right:-24px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:18px}
+.flow .arrow{display:none}
+@media (max-width:760px){.flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.flow .step::after{display:none}}
+@media (max-width:480px){.flow{grid-template-columns:1fr}}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0 0 22px}
+.notes div{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;padding:10px 12px;border-radius:8px;border:1px solid var(--rule)}
+.notes .ok{background:var(--ok-soft);border-color:var(--ok)} .notes .warn{background:var(--warn-soft);border-color:var(--warn)}
+.hub{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:12px;align-items:center;margin:0 0 18px}
+.hub .col{display:flex;flex-direction:column;gap:10px}
+.hub .node{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;font:13.5px/1.4 ui-sans-serif,system-ui,sans-serif}
+.hub .node b{display:block;font-size:14px} .hub .node small{display:block;color:var(--ink-3);font-size:12px}
+.hub .node em{display:block;font-style:normal;color:var(--blue);font-size:11.5px;margin-top:4px}
+.hub .core{background:var(--ok-soft);border:2px solid var(--ok);border-radius:12px;padding:18px 16px;text-align:center;font:14px/1.45 ui-sans-serif,system-ui,sans-serif}
+.hub .core b{display:block;font-size:19px;margin-bottom:6px}
+@media (max-width:640px){.hub{grid-template-columns:1fr}.flow .arrow{display:none}.flow .step{flex-basis:100%}}
+
 </style></head>
 <body><div class="wrap">
 <header>
@@ -82,37 +103,20 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 </tbody></table></div>
 
 <h2>How it connects: CloudTalk, the ERP, email, Workspace, clinical systems</h2>
-<div class="diagram"><svg viewBox="0 0 900 470" role="img" aria-label="Integration map">
-<defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
-<rect x="300" y="170" width="300" height="130" rx="10" fill="#e9f2ee" stroke="#2c5f4a" stroke-width="2"/>
-<text x="450" y="205" text-anchor="middle" font-size="18" font-weight="700" fill="#12161c">Odoo CRM</text>
-<text x="450" y="230" text-anchor="middle" font-size="12.5" fill="#3c4653">pipeline · tasks · sequences · dashboard</text>
-<text x="450" y="250" text-anchor="middle" font-size="12.5" fill="#3c4653">audit log · public apply form</text>
-<text x="450" y="280" text-anchor="middle" font-size="11.5" fill="#2c5f4a">WCI-owned AWS account · AWS BAA</text>
-<rect x="20" y="30" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="120" y="58" text-anchor="middle" font-size="14" font-weight="600">Website "Apply" form</text><text x="120" y="80" text-anchor="middle" font-size="11.5" fill="#6b7684">contact + consent only</text>
-<rect x="20" y="200" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="120" y="228" text-anchor="middle" font-size="14" font-weight="600">ERP (today's system)</text><text x="120" y="250" text-anchor="middle" font-size="11.5" fill="#6b7684">leads + history via its API</text>
-<rect x="20" y="370" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="120" y="398" text-anchor="middle" font-size="14" font-weight="600">Meta / phone / referrals</text><text x="120" y="420" text-anchor="middle" font-size="11.5" fill="#6b7684">inbound webhook</text>
-<rect x="680" y="30" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="58" text-anchor="middle" font-size="14" font-weight="600">CloudTalk</text><text x="780" y="80" text-anchor="middle" font-size="11.5" fill="#6b7684">CloudTalk's own Odoo module</text>
-<rect x="680" y="140" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="168" text-anchor="middle" font-size="14" font-weight="600">Email: AWS SES</text><text x="780" y="190" text-anchor="middle" font-size="11.5" fill="#6b7684">under the AWS BAA</text>
-<rect x="680" y="250" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="278" text-anchor="middle" font-size="14" font-weight="600">Google Workspace</text><text x="780" y="300" text-anchor="middle" font-size="11.5" fill="#6b7684">calendar + one-to-one mail</text>
-<rect x="680" y="370" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="398" text-anchor="middle" font-size="14" font-weight="600">DrChrono · Ambra · Zoom</text><text x="780" y="420" text-anchor="middle" font-size="11.5" fill="#6b7684">unchanged; linked from the record</text>
-<line x1="220" y1="65" x2="300" y2="185" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="220" y1="235" x2="300" y2="235" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="300" y1="250" x2="220" y2="250" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="220" y1="405" x2="300" y2="285" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="600" y1="185" x2="680" y2="65" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="680" y1="80" x2="600" y2="200" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="600" y1="225" x2="680" y2="175" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="600" y1="255" x2="680" y2="285" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="680" y1="300" x2="600" y2="270" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
-<line x1="600" y1="285" x2="680" y2="405" stroke="#3c4653" stroke-width="1.6" stroke-dasharray="5 4"/>
-<text x="255" y="140" font-size="11" fill="#6b7684">creates lead</text>
-<text x="235" y="228" font-size="11" fill="#6b7684">sync</text>
-<text x="255" y="345" font-size="11" fill="#6b7684">creates lead</text>
-<text x="612" y="140" font-size="11" fill="#6b7684">click-to-call · call log</text>
-<text x="630" y="215" font-size="11" fill="#6b7684">sequence emails</text>
-<text x="612" y="325" font-size="11" fill="#6b7684">links only, no data copied</text>
-</svg></div>
+<div class="hub">
+<div class="col">
+<div class="node"><b>Website "Apply" form</b><small>contact + consent only</small><em>creates the lead →</em></div>
+<div class="node"><b>ERP (today's system)</b><small>leads + history via its API</small><em>two-way sync ↔</em></div>
+<div class="node"><b>Meta · phone · referrals</b><small>connector posts to the CRM</small><em>creates the lead →</em></div>
+</div>
+<div class="core"><b>Odoo CRM</b>pipeline · tasks · sequences · dashboard · audit log · public apply form<br><small style="display:block;margin-top:8px;color:var(--ok)">WCI-owned AWS account · AWS Business Associate Agreement</small></div>
+<div class="col">
+<div class="node"><b>CloudTalk</b><small>CloudTalk's own Odoo module</small><em>← click-to-call · call log →</em></div>
+<div class="node"><b>Email: AWS SES</b><small>under the AWS BAA</small><em>sequence emails →</em></div>
+<div class="node"><b>Google Workspace</b><small>calendar + one-to-one mail</small><em>↔ scheduling</em></div>
+<div class="node"><b>DrChrono · Ambra · Zoom</b><small>unchanged</small><em>links only, no data copied</em></div>
+</div>
+</div>
 <ul>
 <li><strong>ERP.</strong> During the transition the ERP stays the system of record. Odoo reads leads and history through the ERP's external API and mirrors stage changes back, so Admissions can work in either while the pilot runs. We have now read the ERP's schema and routes end to end, so the field-by-field mapping into the CRM is known; the medical columns stay out of the CRM by design. The Meta lead connector, which today posts through Zapier into the ERP, will post into the CRM directly. When the pilot holds, Admissions moves to Odoo and the ERP is retired for admissions or kept for back-office use.</li>
 <li><strong>CloudTalk.</strong> Connected through the module CloudTalk publishes for Odoo: click-to-call from the record; calls, notes, tags and recording links logged on the lead; contacts kept in sync. CloudTalk itself is unchanged.</li>
@@ -122,47 +126,26 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 </ul>
 
 <h2>Inbound lead flow: every source, one path</h2>
-<div class="diagram"><svg viewBox="0 0 900 330" role="img" aria-label="Inbound lead flow">
-<defs><marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
-<g font-size="13">
-<rect x="10" y="20" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="48" text-anchor="middle">Website form</text>
-<rect x="10" y="82" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="110" text-anchor="middle">ERP / Meta leads</text>
-<rect x="10" y="144" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="172" text-anchor="middle">Phone / voicemail</text>
-<rect x="10" y="206" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="234" text-anchor="middle">Referral / social</text>
-<rect x="220" y="100" width="150" height="70" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="295" y="128" text-anchor="middle" font-weight="600">Lead created</text><text x="295" y="150" text-anchor="middle" font-size="11.5" fill="#3c4653">source + consent recorded</text>
-<rect x="420" y="100" width="150" height="70" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="495" y="128" text-anchor="middle" font-weight="600">Assigned</text><text x="495" y="150" text-anchor="middle" font-size="11.5" fill="#3c4653">lightest-load consultant</text>
-<rect x="620" y="100" width="150" height="70" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="695" y="128" text-anchor="middle" font-weight="600">Clock starts</text><text x="695" y="150" text-anchor="middle" font-size="11.5" fill="#3c4653">Day 1 to 4 tasks created</text>
-<rect x="620" y="220" width="150" height="70" rx="8" fill="#e9f2ee" stroke="#2c5f4a"/><text x="695" y="248" text-anchor="middle" font-weight="600">Day-1 email sent</text><text x="695" y="270" text-anchor="middle" font-size="11.5" fill="#3c4653">from the consultant, automatically</text>
-<rect x="420" y="220" width="150" height="70" rx="8" fill="#faf3e2" stroke="#8a6510"/><text x="495" y="248" text-anchor="middle" font-weight="600">Needs review?</text><text x="495" y="270" text-anchor="middle" font-size="11.5" fill="#3c4653">flagged inquiries go to the Head</text>
-<line x1="160" y1="43" x2="220" y2="120" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="160" y1="105" x2="220" y2="130" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="160" y1="167" x2="220" y2="140" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="160" y1="229" x2="220" y2="150" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="370" y1="135" x2="420" y2="135" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="570" y1="135" x2="620" y2="135" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="695" y1="170" x2="695" y2="220" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
-<line x1="495" y1="170" x2="495" y2="220" stroke="#3c4653" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#b)"/>
-<text x="450" y="320" text-anchor="middle" font-size="12" fill="#6b7684">Duplicate inquiries are matched on the ERP id or contact details, so one person never becomes two leads.</text>
-</g></svg></div>
+<div class="flow">
+<div class="step"><b>Any source</b><small>website form · ERP / Meta connector · phone or voicemail · referral or social</small></div><div class="arrow">→</div>
+<div class="step blue"><b>Lead created</b><small>source and consent recorded; duplicates matched on ERP id or contact details</small></div><div class="arrow">→</div>
+<div class="step blue"><b>Assigned</b><small>consultant with the lightest load</small></div><div class="arrow">→</div>
+<div class="step blue"><b>Clock starts</b><small>Day 1 to 4 tasks created on the record</small></div><div class="arrow">→</div>
+<div class="step ok"><b>Day-1 email sent</b><small>from the consultant, automatically</small></div>
+</div>
+<div class="notes"><div class="warn"><b>Needs review?</b> Flagged inquiries (for example out of scope) go to the Head of Admissions before any outreach.</div><div class="ok"><b>One person, one lead.</b> Inquiries are matched on the ERP id or contact details so nobody becomes two records.</div></div>
 <p>The public form asks for name, email, phone, location and consent to be contacted. No medical questions appear on the public site; medical information is collected later, after consent, through the document checklist. Inquiries that need a human decision before any outreach (for example an out-of-scope request) are routed to the Head of Admissions instead of the sequence.</p>
 
 <h2>Lead capture on the new website: email first, disclosures before any call</h2>
 <p>The rebranded website is being built at the same time as the CRM, and its lead flow is designed as one piece with it. The order matters: capture the email address at the first step, disclose how AI and call recording are used before anyone books a call, ask only what is needed to route the inquiry, and put the medical questions behind consent inside WCI's own systems.</p>
-<div class="diagram"><svg viewBox="0 0 900 300" role="img" aria-label="Website lead flow">
-<defs><marker id="d" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
-<g font-size="12.5">
-<rect x="10" y="90" width="150" height="80" rx="8" fill="#e9f2ee" stroke="#2c5f4a"/><text x="85" y="118" text-anchor="middle" font-weight="600">1 · Email first</text><text x="85" y="138" text-anchor="middle" font-size="11" fill="#3c4653">name + email + consent</text><text x="85" y="154" text-anchor="middle" font-size="11" fill="#3c4653">lead exists from here</text>
-<rect x="190" y="90" width="150" height="80" rx="8" fill="#faf3e2" stroke="#8a6510"/><text x="265" y="118" text-anchor="middle" font-weight="600">2 · Disclosures</text><text x="265" y="138" text-anchor="middle" font-size="11" fill="#3c4653">AI assistance · call recording</text><text x="265" y="154" text-anchor="middle" font-size="11" fill="#3c4653">privacy notice · Mexico care</text>
-<rect x="370" y="90" width="150" height="80" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="445" y="118" text-anchor="middle" font-weight="600">3 · Qualification</text><text x="445" y="138" text-anchor="middle" font-size="11" fill="#3c4653">location · price range</text><text x="445" y="154" text-anchor="middle" font-size="11" fill="#3c4653">insurance · timing (guided)</text>
-<rect x="550" y="90" width="150" height="80" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="625" y="118" text-anchor="middle" font-weight="600">4 · Book the call</text><text x="625" y="138" text-anchor="middle" font-size="11" fill="#3c4653">consultant's calendar</text><text x="625" y="154" text-anchor="middle" font-size="11" fill="#3c4653">confirmation + reminders</text>
-<rect x="730" y="90" width="160" height="80" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="810" y="118" text-anchor="middle" font-weight="600">5 · After consent</text><text x="810" y="138" text-anchor="middle" font-size="11" fill="#3c4653">medical questions + records</text><text x="810" y="154" text-anchor="middle" font-size="11" fill="#3c4653">inside WCI's systems only</text>
-<line x1="160" y1="130" x2="190" y2="130" stroke="#3c4653" stroke-width="1.5" marker-end="url(#d)"/>
-<line x1="340" y1="130" x2="370" y2="130" stroke="#3c4653" stroke-width="1.5" marker-end="url(#d)"/>
-<line x1="520" y1="130" x2="550" y2="130" stroke="#3c4653" stroke-width="1.5" marker-end="url(#d)"/>
-<line x1="700" y1="130" x2="730" y2="130" stroke="#3c4653" stroke-width="1.5" marker-end="url(#d)"/>
-<rect x="10" y="215" width="510" height="44" rx="8" fill="#e9f2ee" stroke="#2c5f4a"/><text x="265" y="242" text-anchor="middle" font-size="12">Steps 1 to 3 hold no medical information. Dropping off at any step still leaves a lead to follow up.</text>
-<rect x="550" y="215" width="340" height="44" rx="8" fill="#faf3e2" stroke="#8a6510"/><text x="720" y="242" text-anchor="middle" font-size="12">Steps 4 and 5 run in WCI's AWS account (Odoo + secure upload).</text>
-</g></svg></div>
+<div class="flow">
+<div class="step ok"><b>1 · Email first</b><small>name, email, consent. The lead exists from here.</small></div><div class="arrow">→</div>
+<div class="step warn"><b>2 · Disclosures</b><small>AI assistance · call recording · privacy notice · Mexico care</small></div><div class="arrow">→</div>
+<div class="step blue"><b>3 · Qualification</b><small>location · price range · insurance · timing (choices, not free text)</small></div><div class="arrow">→</div>
+<div class="step blue"><b>4 · Book the call</b><small>consultant's calendar; confirmation and reminders</small></div><div class="arrow">→</div>
+<div class="step"><b>5 · After consent</b><small>medical questions and records, inside WCI's systems only</small></div>
+</div>
+<div class="notes"><div class="ok">Steps 1 to 3 hold no medical information. Dropping off at any step still leaves a lead to follow up.</div><div class="warn">Steps 4 and 5 run in WCI's AWS account (Odoo and the secure upload).</div></div>
 <ol>
 <li><strong>Email first.</strong> The first screen asks for a name, an email and consent to be contacted. The lead is created in the CRM at that moment, assigned, and the acknowledgment email goes out. Nothing else is required to become a lead, so a visitor who stops here is still followed up.</li>
 <li><strong>Disclosures before anything else.</strong> On the next screen, in plain language and before any booking: that an AI assistant helps prepare and route inquiries and draft communications, and that a person reviews them (California requires this notice for AI-generated patient communications); that calls with WCI may be recorded, what for, how long recordings are kept, and how to opt out; the Notice of Privacy Practices; and that treatment is provided in Mexico with a US front office. Each is a checkbox the visitor accepts, timestamped on the lead. The wording comes from the draft notices already prepared for WCI's counsel; nothing goes live until counsel approves it.</li>
@@ -212,20 +195,14 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 
 <h2>AI-ready by design: call analysis, script coaching and opportunity flags</h2>
 <div class="card blue"><p><strong>Yes, this approach is built for it, and it is the only shape that keeps call analysis compliant.</strong> Call audio is patient data. The rule we design to is simple: recordings and transcripts never leave WCI's own AWS account, the AI that reads them runs under a Business Associate Agreement, and its output lands on the lead record where a consultant or the Head of Admissions acts on it. Odoo makes that possible because we control the record and the code; a commercial CRM's built-in AI either sits outside its BAA or does not say.</p></div>
-<div class="diagram"><svg viewBox="0 0 900 250" role="img" aria-label="Call analysis pipeline">
-<defs><marker id="c" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
-<g font-size="13">
-<rect x="10" y="60" width="150" height="80" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="90" text-anchor="middle" font-weight="600">CloudTalk</text><text x="85" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">call + recording</text>
-<rect x="200" y="60" width="150" height="80" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="275" y="90" text-anchor="middle" font-weight="600">Transcribe</text><text x="275" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">in WCI's AWS, under BAA</text>
-<rect x="390" y="60" width="150" height="80" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="465" y="90" text-anchor="middle" font-weight="600">Analyze</text><text x="465" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">HIPAA-covered AI service</text>
-<rect x="580" y="60" width="150" height="80" rx="8" fill="#e9f2ee" stroke="#2c5f4a"/><text x="655" y="90" text-anchor="middle" font-weight="600">Written to the lead</text><text x="655" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">summary · next step · flags</text>
-<rect x="770" y="60" width="120" height="80" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="830" y="90" text-anchor="middle" font-weight="600">Consultant</text><text x="830" y="112" text-anchor="middle" font-size="11.5" fill="#3c4653">and the Head</text>
-<line x1="160" y1="100" x2="200" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
-<line x1="350" y1="100" x2="390" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
-<line x1="540" y1="100" x2="580" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
-<line x1="730" y1="100" x2="770" y2="100" stroke="#3c4653" stroke-width="1.5" marker-end="url(#c)"/>
-<rect x="200" y="170" width="530" height="50" rx="8" fill="#faf3e2" stroke="#8a6510"/><text x="465" y="200" text-anchor="middle" font-size="12.5">Audio and transcripts stay inside this box. Only the analysis reaches the record.</text>
-</g></svg></div>
+<div class="flow">
+<div class="step"><b>CloudTalk</b><small>call and recording</small></div><div class="arrow">→</div>
+<div class="step blue"><b>Transcribe</b><small>in WCI's AWS account, under the BAA</small></div><div class="arrow">→</div>
+<div class="step blue"><b>Analyze</b><small>HIPAA-covered AI service in WCI's name</small></div><div class="arrow">→</div>
+<div class="step ok"><b>Written to the lead</b><small>summary · next step · flags</small></div><div class="arrow">→</div>
+<div class="step"><b>Consultant and the Head</b><small>confirm, coach, act</small></div>
+</div>
+<div class="notes"><div class="warn">Audio and transcripts stay inside WCI's account. Only the analysis reaches the record.</div></div>
 <h3>What the AI layer will do, in the order we will build it</h3>
 <ol>
 <li><strong>Call summary and next step on every recorded call.</strong> After a call, the lead shows a short summary, the reasons raised (location, cost, insurance, timing), and a suggested next action. The consultant confirms or edits it; nothing is sent without a person.</li>
