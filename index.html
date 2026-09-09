@@ -1,83 +1,183 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-<title>WCI Admissions CRM: decision and next steps</title>
+<title>WCI Admissions CRM: decision, design and next steps</title>
 <style>
-:root{--ink:#12161c;--ink-2:#3c4653;--ink-3:#6b7684;--paper:#fbfaf8;--card:#fff;--rule:#e4e0d9;--accent:#8a3324;--ok:#2c5f4a;--ok-soft:#e9f2ee;--warn:#8a6510;--warn-soft:#faf3e2;--pending-soft:#f0f0f2}
+:root{--ink:#12161c;--ink-2:#3c4653;--ink-3:#6b7684;--paper:#fbfaf8;--card:#fff;--rule:#e4e0d9;--accent:#8a3324;--accent-soft:#f6efec;--ok:#2c5f4a;--ok-soft:#e9f2ee;--warn:#8a6510;--warn-soft:#faf3e2;--blue:#2b4c7e;--blue-soft:#e8eef7;--pending-soft:#f0f0f2}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 ui-serif,Georgia,"Times New Roman",serif;-webkit-text-size-adjust:100%}
-.wrap{max-width:820px;margin:0 auto;padding:0 20px 80px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 80px}
 header{border-bottom:3px double var(--rule);padding:44px 0 22px;margin-bottom:28px}
 .kicker{font:600 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
-h1{font-size:clamp(24px,5.5vw,36px);line-height:1.15;margin:0 0 10px;font-weight:600}
-.sub{color:var(--ink-2);margin:0;font-size:17px}
+h1{font-size:clamp(26px,5.5vw,40px);line-height:1.12;margin:0 0 10px;font-weight:600}
+.sub{color:var(--ink-2);margin:0;font-size:18px}
 .meta{font:12px/1.55 ui-sans-serif,system-ui,sans-serif;color:var(--ink-3);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
-h2{font-size:13px;font-family:ui-sans-serif,system-ui,sans-serif;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:40px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+h2{font-size:13px;font-family:ui-sans-serif,system-ui,sans-serif;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+h3{font-size:18px;margin:22px 0 8px;font-weight:600}
 p{margin:0 0 14px} ul,ol{padding-left:22px;margin:0 0 14px} li{margin:0 0 8px}
 code{font:13px ui-monospace,Menlo,monospace;background:var(--pending-soft);padding:1px 5px;border-radius:3px}
 .scroll{overflow-x:auto;margin:0 0 18px;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}
-th,td{border:1px solid var(--rule);padding:8px 10px;vertical-align:top;text-align:left;min-width:110px}
+th,td{border:1px solid var(--rule);padding:9px 11px;vertical-align:top;text-align:left;min-width:110px}
 th{background:var(--pending-soft);font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
 .card{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--accent);padding:16px 18px;margin:0 0 18px}
-.card.ok{border-left-color:var(--ok);background:var(--ok-soft)} .card.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.card.ok{border-left-color:var(--ok);background:var(--ok-soft)} .card.warn{border-left-color:var(--warn);background:var(--warn-soft)} .card.blue{border-left-color:var(--blue);background:var(--blue-soft)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:0 0 18px}
+.kv{font:15px/1.5 ui-sans-serif,system-ui,sans-serif;background:var(--card);border:1px solid var(--rule);padding:14px 16px}
+.kv b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.kv .big{font-size:26px;font-weight:700;color:var(--accent);display:block;margin-bottom:4px}
 figure{margin:0 0 20px;background:var(--card);border:1px solid var(--rule);padding:8px} figure img{display:block;width:100%;height:auto}
 figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);padding:8px 4px 2px}
-@media (max-width:600px){td::before{content:attr(data-l);display:block;font:600 10px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}}
+.diagram{background:var(--card);border:1px solid var(--rule);padding:10px;margin:0 0 20px}
+.diagram svg{width:100%;height:auto;display:block;font-family:ui-sans-serif,system-ui,sans-serif}
+.stage{border:1px solid var(--rule);background:var(--card);margin:0 0 12px;padding:14px 16px;border-left:5px solid var(--blue)}
+.stage h3{margin:0 0 6px;font-size:17px}
+.stage .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14.5px}
+.stage .row b{display:block;font:600 10.5px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+@media (max-width:640px){.stage .row{grid-template-columns:1fr}td::before{content:attr(data-l);display:block;font:600 10px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}}
+.tick{color:var(--ok);font-weight:700}.cross{color:var(--accent);font-weight:700}
 </style></head>
 <body><div class="wrap">
 <header>
 <p class="kicker">Williams Cancer Institute · Admissions CRM</p>
 <h1>We are going to try Odoo first</h1>
-<p class="sub">Where we landed on the admissions CRM, what is already built, and what we need from your side to run it in WCI's own AWS account.</p>
-<p class="meta">Prepared by Winn Solutions for Peter · September 9, 2026 · Confidential, for WCI internal use</p>
+<p class="sub">What Admissions gets over the current ERP, how it connects to CloudTalk, the ERP, email and the clinical systems, the workflows we will build for each stage of the patient journey, and what we need from WCI to run it.</p>
+<p class="meta">Prepared by Winn Solutions for Peter · September 9, 2026 · Confidential, for WCI internal use · Every screen in this document runs on invented test data; no patient information was used.</p>
 </header>
 
-<h2>The decision</h2>
-<div class="card ok">
-<p><strong>We are starting with Odoo Community, self-hosted in a WCI-owned AWS account.</strong> It is open source with no licence cost, it is the only option we evaluated that meets every requirement without a paid tier, an unresolved vendor agreement, or a switch that cannot be undone, and it already runs the admissions pipeline in a working prototype. Patient data never sits with a CRM vendor; it stays in WCI's account under the AWS Business Associate Agreement.</p>
+<h2>The decision in one paragraph</h2>
+<div class="card ok"><p><strong>We are starting with Odoo Community, self-hosted in a WCI-owned AWS account.</strong> It is open source with no licence cost, it met every requirement without a paid tier, an unresolved vendor agreement or a switch that cannot be undone, CloudTalk connects to it with CloudTalk's own module, and it already runs the admissions pipeline in a working prototype. Patient data never sits with a CRM vendor: it stays in WCI's account under the AWS Business Associate Agreement.</p></div>
+<div class="grid">
+<div class="kv"><span class="big">$0</span><b>Licence</b>Open source. The only running cost is AWS hosting, about $100 to $300 a month.</div>
+<div class="kv"><span class="big">13</span><b>Automations already working</b>Assignment, the Day 1 to 4 sequence, alerts, hand-offs and escalations, proven end to end on test data.</div>
+<div class="kv"><span class="big">1</span><b>Place for every inquiry</b>Calls, emails, tasks, documents status and stage on one record, instead of four systems.</div>
+<div class="kv"><span class="big">0</span><b>Missed follow-ups by design</b>Every inquiry carries a clock, an owner, dated tasks and a daily overdue digest.</div>
 </div>
-<p>Why Odoo over the alternatives, in plain terms:</p>
-<ul>
-<li><strong>The automations we need are built in and unlimited:</strong> timed follow-ups, stage rules, assignment, webhooks in and out, with no per-run metering.</li>
-<li><strong>CloudTalk connects natively.</strong> CloudTalk publishes its own Odoo module: click-to-call from the record, calls, notes, tags and recording links logged on the lead.</li>
-<li><strong>Nothing to buy up front.</strong> The only running cost is AWS hosting, roughly $100–300 a month.</li>
-<li><strong>It is already working.</strong> The prototype below was built on invented test data. No real patient information was used.</li>
-</ul>
 
-<h2>What is already built (prototype, test data only)</h2>
-<figure><img src="evidence/demo-kanban.png" alt="Odoo pipeline board with the WCI admissions stages"><figcaption>The admissions pipeline in Odoo: the same stages Admissions uses today, one card per inquiry.</figcaption></figure>
-<ul>
-<li>Your stages as they are today (Lead, Contact sequence, Potential patient, Tumor Board, Consultation, Treatment plan, Patient) and the nine closing reasons, loaded exactly as the ERP names them.</li>
-<li>New inquiries are assigned automatically to the consultant with the lightest load.</li>
-<li>The Day 1–4 contact sequence is created automatically as dated tasks; the Day-1 email goes out on its own.</li>
-<li>A response-time clock on every inquiry, and a daily digest of overdue follow-ups to each consultant and to the Head of Admissions. This is the alert the ERP does not have today.</li>
-<li>Potential-patient document checklist, Tumor Board hand-off with Candidate / More-studies buttons, a seven-day follow-up after the treatment plan, and an escalation if a case goes quiet for two weeks.</li>
-<li>Not-a-Candidate letter generated from the record with one click.</li>
-<li>A public "Apply to be a patient" form that creates the inquiry directly. Contact details and consent only; no medical questions on the public page.</li>
-<li>Inbound and outbound webhooks, so the ERP and other systems can feed leads in and receive stage changes.</li>
-<li>Supervision dashboard: leads by source and outcome, closing reasons, overdue follow-ups.</li>
-<li>Full change and access logging on patient records, and the CloudTalk module installed and ready to connect.</li>
-</ul>
-
-<h2>How it fits with what you run today</h2>
-<div class="scroll"><table><thead><tr><th>System</th><th>During the transition</th><th>After</th></tr></thead><tbody>
-<tr><td data-l="System"><strong>ERP</strong></td><td data-l="During">Stays the system of record. Odoo reads leads and history through the ERP's external API and runs alongside it.</td><td data-l="After">Admissions moves to Odoo; the ERP is retired for admissions or kept for back-office use. Your call once the parallel run proves out.</td></tr>
-<tr><td data-l="System"><strong>CloudTalk</strong></td><td data-l="During">Unchanged. Connected through CloudTalk's own Odoo module.</td><td data-l="After">Same, provided CloudTalk provides a signed Business Associate Agreement (see below).</td></tr>
-<tr><td data-l="System"><strong>Gmail / Google Workspace</strong></td><td data-l="During">Unchanged for one-to-one mail. Sequence emails move to a single template set sent from Odoo.</td><td data-l="After">Same.</td></tr>
-<tr><td data-l="System"><strong>DrChrono · Ambra</strong></td><td data-l="During">Unchanged. Clinical records and imaging stay where they are.</td><td data-l="After">Unchanged.</td></tr>
-<tr><td data-l="System"><strong>Website</strong></td><td data-l="During">Unchanged.</td><td data-l="After">The "Apply" form points at the new hosted form; no medical questions on the public site.</td></tr>
+<h2>What Admissions gets, compared with today</h2>
+<div class="scroll"><table><thead><tr><th>Today (ERP + Gmail + CloudTalk + Word)</th><th>With Odoo</th></tr></thead><tbody>
+<tr><td data-l="Today"><span class="cross">✗</span> Website inquiries land in one person's inbox; a profile is typed into the ERP by hand.</td><td data-l="Odoo"><span class="tick">✓</span> Website, ERP, Meta and phone inquiries create the record automatically, with the source recorded.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> Leads are assigned manually, every day, by the Head of Admissions.</td><td data-l="Odoo"><span class="tick">✓</span> Assigned on arrival to the consultant with the lightest load; capacity per consultant is a setting.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> The Day 1 to 4 sequence lives in each consultant's memory and Gmail templates.</td><td data-l="Odoo"><span class="tick">✓</span> The sequence is created as dated tasks the moment a lead is assigned; the Day-1 email sends itself from one shared template set.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> No alert when a task is missed; supervision means opening the ERP, Gmail and CloudTalk one by one.</td><td data-l="Odoo"><span class="tick">✓</span> Overdue digest to each consultant and the Head of Admissions every morning; a supervision dashboard with source, outcome, closing reasons and overdue work.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> Phone numbers are copied from the ERP into CloudTalk to dial.</td><td data-l="Odoo"><span class="tick">✓</span> Click-to-call from the record; calls, notes, tags and recording links land on the lead.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> Not-a-Candidate letters are assembled from a Word template by hand.</td><td data-l="Odoo"><span class="tick">✓</span> One click sets the closing reason and produces the letter.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> Which sources produce patients is not reported by anyone.</td><td data-l="Odoo"><span class="tick">✓</span> Source-to-outcome report on the dashboard, using the ERP's own source labels.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> The intake form travels by email as a PDF.</td><td data-l="Odoo"><span class="tick">✓</span> Public form collects contact details and consent only; documents are requested from the record with a checklist and reminders.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> No record of who viewed or changed what.</td><td data-l="Odoo"><span class="tick">✓</span> Every create, read, change and delete on a patient record is logged.</td></tr>
+<tr><td data-l="Today"><span class="cross">✗</span> Hosted on a shared web host that disclaims HIPAA.</td><td data-l="Odoo"><span class="tick">✓</span> Runs in WCI's own AWS account under the AWS Business Associate Agreement; encrypted at rest and in transit.</td></tr>
 </tbody></table></div>
 
+<h2>How it connects: CloudTalk, the ERP, email, Workspace, clinical systems</h2>
+<div class="diagram"><svg viewBox="0 0 900 470" role="img" aria-label="Integration map">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
+<rect x="300" y="170" width="300" height="130" rx="10" fill="#e9f2ee" stroke="#2c5f4a" stroke-width="2"/>
+<text x="450" y="205" text-anchor="middle" font-size="18" font-weight="700" fill="#12161c">Odoo CRM</text>
+<text x="450" y="230" text-anchor="middle" font-size="12.5" fill="#3c4653">pipeline · tasks · sequences · dashboard</text>
+<text x="450" y="250" text-anchor="middle" font-size="12.5" fill="#3c4653">audit log · public apply form</text>
+<text x="450" y="280" text-anchor="middle" font-size="11.5" fill="#2c5f4a">WCI-owned AWS account · AWS BAA</text>
+<rect x="20" y="30" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="120" y="58" text-anchor="middle" font-size="14" font-weight="600">Website "Apply" form</text><text x="120" y="80" text-anchor="middle" font-size="11.5" fill="#6b7684">contact + consent only</text>
+<rect x="20" y="200" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="120" y="228" text-anchor="middle" font-size="14" font-weight="600">ERP (today's system)</text><text x="120" y="250" text-anchor="middle" font-size="11.5" fill="#6b7684">leads + history via its API</text>
+<rect x="20" y="370" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="120" y="398" text-anchor="middle" font-size="14" font-weight="600">Meta / phone / referrals</text><text x="120" y="420" text-anchor="middle" font-size="11.5" fill="#6b7684">inbound webhook</text>
+<rect x="680" y="30" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="58" text-anchor="middle" font-size="14" font-weight="600">CloudTalk</text><text x="780" y="80" text-anchor="middle" font-size="11.5" fill="#6b7684">CloudTalk's own Odoo module</text>
+<rect x="680" y="140" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="168" text-anchor="middle" font-size="14" font-weight="600">Email: AWS SES</text><text x="780" y="190" text-anchor="middle" font-size="11.5" fill="#6b7684">under the AWS BAA</text>
+<rect x="680" y="250" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="278" text-anchor="middle" font-size="14" font-weight="600">Google Workspace</text><text x="780" y="300" text-anchor="middle" font-size="11.5" fill="#6b7684">calendar + one-to-one mail</text>
+<rect x="680" y="370" width="200" height="70" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="780" y="398" text-anchor="middle" font-size="14" font-weight="600">DrChrono · Ambra · Zoom</text><text x="780" y="420" text-anchor="middle" font-size="11.5" fill="#6b7684">unchanged; linked from the record</text>
+<line x1="220" y1="65" x2="300" y2="185" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="220" y1="235" x2="300" y2="235" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="300" y1="250" x2="220" y2="250" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="220" y1="405" x2="300" y2="285" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="600" y1="185" x2="680" y2="65" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="680" y1="80" x2="600" y2="200" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="600" y1="225" x2="680" y2="175" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="600" y1="255" x2="680" y2="285" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="680" y1="300" x2="600" y2="270" stroke="#3c4653" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="600" y1="285" x2="680" y2="405" stroke="#3c4653" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="255" y="140" font-size="11" fill="#6b7684">creates lead</text>
+<text x="235" y="228" font-size="11" fill="#6b7684">sync</text>
+<text x="255" y="345" font-size="11" fill="#6b7684">creates lead</text>
+<text x="612" y="140" font-size="11" fill="#6b7684">click-to-call · call log</text>
+<text x="630" y="215" font-size="11" fill="#6b7684">sequence emails</text>
+<text x="612" y="325" font-size="11" fill="#6b7684">links only, no data copied</text>
+</svg></div>
+<ul>
+<li><strong>ERP.</strong> During the transition the ERP stays the system of record. Odoo reads leads and history through the ERP's external API and mirrors stage changes back, so Admissions can work in either while the pilot runs. When the pilot holds, Admissions moves to Odoo and the ERP is retired for admissions or kept for back-office use.</li>
+<li><strong>CloudTalk.</strong> Connected through the module CloudTalk publishes for Odoo: click-to-call from the record; calls, notes, tags and recording links logged on the lead; contacts kept in sync. CloudTalk itself is unchanged.</li>
+<li><strong>Email.</strong> Sequence and reminder emails go out through AWS SES under the AWS Business Associate Agreement, from WCI's own domain. Postmark, which we use for other clients, declines to sign a BAA and is therefore not used for patient email. One-to-one mail stays in Gmail.</li>
+<li><strong>Google Workspace.</strong> Consultations are scheduled from the record into Google Calendar with the Zoom link; one-to-one mail stays where it is.</li>
+<li><strong>DrChrono, Ambra, Zoom.</strong> Unchanged. The CRM holds a link and a status ("images received"), never the clinical content.</li>
+</ul>
+
+<h2>Inbound lead flow: every source, one path</h2>
+<div class="diagram"><svg viewBox="0 0 900 330" role="img" aria-label="Inbound lead flow">
+<defs><marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3c4653"/></marker></defs>
+<g font-size="13">
+<rect x="10" y="20" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="48" text-anchor="middle">Website form</text>
+<rect x="10" y="82" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="110" text-anchor="middle">ERP / Meta leads</text>
+<rect x="10" y="144" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="172" text-anchor="middle">Phone / voicemail</text>
+<rect x="10" y="206" width="150" height="46" rx="8" fill="#fff" stroke="#e4e0d9"/><text x="85" y="234" text-anchor="middle">Referral / social</text>
+<rect x="220" y="100" width="150" height="70" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="295" y="128" text-anchor="middle" font-weight="600">Lead created</text><text x="295" y="150" text-anchor="middle" font-size="11.5" fill="#3c4653">source + consent recorded</text>
+<rect x="420" y="100" width="150" height="70" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="495" y="128" text-anchor="middle" font-weight="600">Assigned</text><text x="495" y="150" text-anchor="middle" font-size="11.5" fill="#3c4653">lightest-load consultant</text>
+<rect x="620" y="100" width="150" height="70" rx="8" fill="#e8eef7" stroke="#2b4c7e"/><text x="695" y="128" text-anchor="middle" font-weight="600">Clock starts</text><text x="695" y="150" text-anchor="middle" font-size="11.5" fill="#3c4653">Day 1 to 4 tasks created</text>
+<rect x="620" y="220" width="150" height="70" rx="8" fill="#e9f2ee" stroke="#2c5f4a"/><text x="695" y="248" text-anchor="middle" font-weight="600">Day-1 email sent</text><text x="695" y="270" text-anchor="middle" font-size="11.5" fill="#3c4653">from the consultant, automatically</text>
+<rect x="420" y="220" width="150" height="70" rx="8" fill="#faf3e2" stroke="#8a6510"/><text x="495" y="248" text-anchor="middle" font-weight="600">Needs review?</text><text x="495" y="270" text-anchor="middle" font-size="11.5" fill="#3c4653">flagged inquiries go to the Head</text>
+<line x1="160" y1="43" x2="220" y2="120" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="160" y1="105" x2="220" y2="130" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="160" y1="167" x2="220" y2="140" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="160" y1="229" x2="220" y2="150" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="370" y1="135" x2="420" y2="135" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="570" y1="135" x2="620" y2="135" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="695" y1="170" x2="695" y2="220" stroke="#3c4653" stroke-width="1.5" marker-end="url(#b)"/>
+<line x1="495" y1="170" x2="495" y2="220" stroke="#3c4653" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#b)"/>
+<text x="450" y="320" text-anchor="middle" font-size="12" fill="#6b7684">Duplicate inquiries are matched on the ERP id or contact details, so one person never becomes two leads.</text>
+</g></svg></div>
+<p>The public form asks for name, email, phone, location and consent to be contacted. No medical questions appear on the public site; medical information is collected later, after consent, through the document checklist. Inquiries that need a human decision before any outreach (for example an out-of-scope request) are routed to the Head of Admissions instead of the sequence.</p>
+
+<h2>The workflows we will build: one per stage of the patient journey</h2>
+<p>Each stage has its own automation, its own tasks and its own email templates. Templates are drafted by us and approved by WCI before they go live; nothing sends that WCI has not read.</p>
+
+<div class="stage"><h3>1 · Inquiry received</h3><div class="row"><div><b>Automation</b>Lead created from any source; source and consent stored; assigned to the lightest-load consultant; response clock starts; flagged cases go to the Head instead.</div><div><b>Email</b>Acknowledgment within minutes: "we received your request; a patient consultant will contact you within one business day", from the assigned consultant.</div></div></div>
+
+<div class="stage"><h3>2 · Contact sequence, Day 1 to 4</h3><div class="row"><div><b>Automation</b>Four dated tasks appear on the record: Day 1 email, Day 2 call (and text, for US numbers that consented), Day 3 email, Day 4 close or continue. Each task is checked off as it is done. Missed tasks show in the morning digest. Day 4 closes with one of the nine reasons or moves the lead forward.</div><div><b>Email</b>Day 1 first contact (sent automatically). Day 3 third contact. "More information" template for people who only wanted details. Day 2 text: a short, consented reminder that the consultant will call.</div></div></div>
+
+<div class="stage"><h3>3 · Potential patient: documents</h3><div class="row"><div><b>Automation</b>Moving the card creates the document checklist as tasks: intake form, images, ID and pathology, case package complete. Reminders fire if items are still open at day 3 and day 7. Received documents are recorded as status only; the files live in DrChrono and Ambra.</div><div><b>Email</b>Intake form request with the secure upload instructions. Reminder at day 3 listing exactly what is still missing. "Everything received, your case goes to review" confirmation.</div></div></div>
+
+<div class="stage"><h3>4 · Tumor Board review</h3><div class="row"><div><b>Automation</b>A hand-off task goes to the Head of Admissions to present the case. Two buttons record the outcome: <em>Candidate</em> moves the lead to Consultation and creates the scheduling task; <em>More studies</em> returns it to documents with a task listing what is needed. Not a candidate produces the letter and closes with the right reason.</div><div><b>Email</b>"Your case is under review" when the stage is entered. Outcome emails: consultation invitation; request for additional studies; the Not-a-Candidate letter.</div></div></div>
+
+<div class="stage"><h3>5 · Consultation</h3><div class="row"><div><b>Automation</b>The consultant schedules from the record: a Google Calendar event with the Zoom link is created, the confirmation goes out, and reminders fire 24 hours and 1 hour before. A no-show creates a reschedule task the same day.</div><div><b>Email</b>Booking confirmation with the Zoom link and what to have ready. 24-hour reminder. Reschedule note if missed.</div></div></div>
+
+<div class="stage"><h3>6 · Treatment plan sent</h3><div class="row"><div><b>Automation</b>When the plan is sent, a follow-up call task is created for day 7. If the record has not moved in 14 days it is tagged dormant and escalated to the Head with a decision task: re-engage, close as no response, or hand to the medical office.</div><div><b>Email</b>Plan cover note from the consultant offering a call to walk through questions. Day-7 check-in. Day-14 gentle re-engagement if consented.</div></div></div>
+
+<div class="stage"><h3>7 · Patient</h3><div class="row"><div><b>Automation</b>Confirming the plan moves the record to Patient; coordination tasks hand to the treatment team; Admissions stops sequencing and keeps the record for reporting.</div><div><b>Email</b>Welcome and next-steps note, then the treatment team's own communications take over.</div></div></div>
+
+<div class="stage"><h3>Closed or dormant</h3><div class="row"><div><b>Automation</b>Every closed record carries one of the nine reasons, which feeds the source-to-outcome report. Consented, closed-for-no-response records can be offered a light re-engagement after 90 days; anyone who asked not to be contacted is suppressed everywhere.</div><div><b>Email</b>One re-engagement note at 90 days, only where consent allows.</div></div></div>
+
+<h2>Booking mechanism</h2>
+<div class="card blue"><p><strong>Phase 1 (now):</strong> consultants book from the record. Odoo creates the Google Calendar event with the Zoom link, sends the confirmation and the 24-hour and 1-hour reminders, and turns a no-show into a reschedule task. The calendar stays the one WCI already uses.</p>
+<p><strong>Phase 2 (once counsel confirms the scope):</strong> a self-serve "pick a time" page for candidates, hosted in WCI's account, so the consultation invitation carries a booking link instead of an email exchange. This needs either the Odoo appointments add-on or a scheduling service that signs a BAA; we will propose the option once the parallel run is stable.</p></div>
+
+<h2>Tasks, ownership and no missed opportunities</h2>
+<div class="grid">
+<div class="kv"><b>Every inquiry has an owner</b>Assigned on arrival; reassignment is one click and is logged.</div>
+<div class="kv"><b>Every inquiry has a clock</b>A response deadline is stamped at creation and shown on the board; breaches are a filter and appear in the digest.</div>
+<div class="kv"><b>Every stage has dated tasks</b>Created automatically, visible on the card and on each consultant's task list; done or overdue, never forgotten.</div>
+<div class="kv"><b>Every morning, a digest</b>Each consultant gets their overdue items; the Head of Admissions gets the whole team's, grouped by person.</div>
+<div class="kv"><b>Cards that stop moving turn red</b>Stage-specific thresholds (5 days in contact, 14 in documents, 10 at Tumor Board, 7 at consultation) highlight stalled cases on the board.</div>
+<div class="kv"><b>Escalation is automatic</b>Dormant treatment plans go to the Head at 14 days; inquiries that need a decision are routed to the Head before any outreach.</div>
+</div>
+<figure><img src="evidence/demo-supervision-board.png" alt="Supervision dashboard" loading="lazy"><figcaption>Supervision dashboard: leads by source and outcome, closing reasons, and overdue follow-ups by consultant.</figcaption></figure>
+<figure><img src="evidence/demo-kanban.png" alt="Pipeline board" loading="lazy"><figcaption>The pipeline board: one card per inquiry, the owner's initials, the next task, and a "dormant" tag placed by the 14-day rule.</figcaption></figure>
+<figure><img src="evidence/demo-automation-rules.png" alt="Automation rules" loading="lazy"><figcaption>The automation rules as configured in the prototype.</figcaption></figure>
+
 <h2>What else we looked at</h2>
-<p>We compared Odoo against the open-source alternatives (EspoCRM, Frappe CRM, Twenty, SuiteCRM, Medplum) and the commercial CRMs that will sign a Business Associate Agreement (GoHighLevel, HubSpot Enterprise, Zoho, Salesforce Health Cloud, monday, LeadSquared and others). The short version:</p>
+<p>We compared Odoo against the open-source alternatives (EspoCRM, Frappe CRM, Twenty, SuiteCRM, Medplum) and the commercial CRMs that will sign a Business Associate Agreement (GoHighLevel, HubSpot Enterprise, Zoho, Salesforce Health Cloud, monday, LeadSquared and others).</p>
 <div class="scroll"><table><thead><tr><th>Option</th><th>Where it fell short for WCI</th><th>3-year cost, 8 users</th></tr></thead><tbody>
-<tr><td data-l="Option"><strong>Odoo Community</strong> (chosen)</td><td data-l="Short">Chosen.</td><td data-l="Cost">$0 licence · AWS hosting ≈ $4–11k</td></tr>
-<tr><td data-l="Option">GoHighLevel</td><td data-l="Short">Good all-in-one with its own phone system, but the HIPAA package cannot be reversed once bought, the coverage of live calls is not spelled out, and the workflow engine has caps and per-run charges. Worth a second look only if CloudTalk cannot provide a BAA.</td><td data-l="Cost">≈ $24–29k</td></tr>
-<tr><td data-l="Option">HubSpot Enterprise</td><td data-l="Short">Signs a BAA, but turning on its health-data mode is permanent and disables the personalised email tools we would use most.</td><td data-l="Cost">≈ $22–47k</td></tr>
-<tr><td data-l="Option">Zoho CRM</td><td data-l="Short">Cheapest BAA, but thin safeguards: viewing a patient record is not logged.</td><td data-l="Cost">≈ $12–15k</td></tr>
-<tr><td data-l="Option">Salesforce Health Cloud</td><td data-l="Short">Strong, but priced for a much larger organisation.</td><td data-l="Cost">≈ $101k</td></tr>
-<tr><td data-l="Option">EspoCRM · Frappe · Twenty</td><td data-l="Short">Open source, but each is missing something we need (paid workflow engine, undocumented two-factor login, or paid audit logging).</td><td data-l="Cost">$0–low + hosting</td></tr>
+<tr><td data-l="Option"><strong>Odoo Community</strong></td><td data-l="Short">Chosen.</td><td data-l="Cost">$0 licence · AWS hosting about $4k to $11k</td></tr>
+<tr><td data-l="Option">GoHighLevel</td><td data-l="Short">Good all-in-one with its own phone system, but the HIPAA package cannot be reversed once bought, coverage of live calls is not spelled out, and the workflow engine has caps and per-run charges. Worth a second look only if CloudTalk cannot provide a BAA.</td><td data-l="Cost">about $24k to $29k</td></tr>
+<tr><td data-l="Option">HubSpot Enterprise</td><td data-l="Short">Signs a BAA, but its health-data mode is permanent and disables the personalised email tools we would use most.</td><td data-l="Cost">about $22k to $47k</td></tr>
+<tr><td data-l="Option">Zoho CRM</td><td data-l="Short">Cheapest BAA, but thin safeguards: viewing a patient record is not logged.</td><td data-l="Cost">about $12k to $15k</td></tr>
+<tr><td data-l="Option">Salesforce Health Cloud</td><td data-l="Short">Strong, but priced for a much larger organisation.</td><td data-l="Cost">about $101k</td></tr>
+<tr><td data-l="Option">EspoCRM · Frappe · Twenty</td><td data-l="Short">Open source, but each is missing something we need: a paid workflow engine, undocumented two-factor login, or paid audit logging.</td><td data-l="Cost">$0 to low, plus hosting</td></tr>
 <tr><td data-l="Option">Pipedrive · Copper · Nutshell · Keap · Close · Attio</td><td data-l="Short">Either prohibit health data in their terms or offer no agreement covering it.</td><td data-l="Cost">n/a</td></tr>
 </tbody></table></div>
 
@@ -93,12 +193,13 @@ figcaption{font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink-2);p
 <li><strong>From Daniel:</strong> how the Meta lead automation writes into the ERP; the shape of the public <code>/patients/public</code> endpoint; whether the ERP can send a webhook when a patient record is created or changes stage; and moving the ERP off its development server onto a production build behind nginx, running as a non-root user.</li>
 <li><strong>Google Workspace:</strong> confirm the Business Associate Agreement has been accepted in the Admin console.</li>
 <li><strong>Sender domain:</strong> permission to verify a sending domain in AWS SES for the sequence emails.</li>
+<li><strong>Templates:</strong> the current first-contact, third-contact and "more information" emails, so the new template set starts from what works today.</li>
 </ol>
 
 <h2>The first thirty days</h2>
 <ol>
-<li><strong>Week 1–2:</strong> the access items above; AWS account and BAA; the prototype deployed into WCI's account, still on test data.</li>
-<li><strong>Week 2–4:</strong> parallel run. Odoo mirrors the ERP's leads through the API while Admissions keeps working in the ERP; we tune stages, sequences and the digest with the Head of Admissions.</li>
+<li><strong>Week 1 to 2:</strong> the access items above; AWS account and BAA; the prototype deployed into WCI's account, still on test data; CloudTalk module connected.</li>
+<li><strong>Week 2 to 4:</strong> parallel run. Odoo mirrors the ERP's leads through the API while Admissions keeps working in the ERP; we tune stages, sequences, templates and the digest with the Head of Admissions.</li>
 <li><strong>Week 4 onward:</strong> two consultants work new inquiries in Odoo; everyone else follows once the pilot holds.</li>
 </ol>
 <p>Questions or corrections: reply to Jarred directly.</p>
